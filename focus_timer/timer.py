@@ -127,6 +127,7 @@ def main():
     while True:
         # ── Work phase ──
         session_num = completed_work + 1
+        work_start = time.time()
         finished = run_phase(
             label=f"Work Session #{session_num}",
             minutes=WORK_MINUTES,
@@ -137,7 +138,7 @@ def main():
             save_session("work", WORK_MINUTES)
             completed_work += 1
         else:
-            save_session("work-partial", int((time.time()) % 60))  # rough
+            save_session("work-partial", int((time.time() - work_start) / 60))
 
         # ── Decide break length ──
         if completed_work > 0 and completed_work % SESSIONS_UNTIL_LONG == 0:
